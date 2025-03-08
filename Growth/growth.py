@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import os
@@ -30,7 +31,7 @@ if uploaded_files:
 
         if file_ext == ".csv":
             df = pd.read_csv(file)
-        elif file_ext  == ".xlxs":
+        elif file_ext  == "xlxs":
              df = pd.read_excel(file)
         else:
             st.error(f"unsupported file type: {file_ext}")
@@ -55,8 +56,9 @@ if uploaded_files:
                     df[numeric_cols] = df[numeric_cols].fillna(numeric_cols.mean())
                     st.write("✅ Missing values have been filled")
     st.subheader("🎯 select coumns to keep")
-   columns = st.multiselect(f"Choose columns for{file.name}", df.columns, default=df.columns)
-    df = df[columns] 
+    columns = st.multiselect(f"Choose columns for{file.name}", df.columns, default=df.columns)
+    df = df[columns]          
+
     #data visualization
     st.subheader("📊Data Visualization")
     if st.checkbox(f"Show visualization for {file.name}"):
@@ -64,16 +66,16 @@ if uploaded_files:
 
         #conversion options
         st.subheader("🔄 Conversion Options")
-        conversion_type = st.radio(f"convert {file.name} to:", ["CVS", "Excel"], key=file.name)
+        conversion_type = st.radio(f"converter{file.name} to:", ["CVS" "Excel"], key = file.name)
         if st.button(f"convert{file.name}"):
             buffer = BytesIO()
             if conversion_type == "CSV":
-                df.to_csv(buffer, index=False)
+                df.to.to_csv(buffer, index=False)
                 file_name = file.name.replace(file_ext, ".csv")
                 mime_type = "text/csv"
 
             elif conversion_type == "Excel":
-                df.to_excel(buffer, index=False)
+                df.to.to_excel(buffer, index=False)
                 file_name = file.name.replace(file_ext, ".xlsx")
                 mime_type = "application/vnd.openxmlformats.officedocument.spread.sheetml.sheet"
             buffer.seek(0)
