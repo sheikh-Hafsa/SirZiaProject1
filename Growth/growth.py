@@ -31,7 +31,7 @@ if uploaded_files:
 
         if file_ext == ".csv":
             df = pd.read_csv(file)
-        elif file_ext  == "xlxs":
+        elif file_ext  == ".xlxs":
              df = pd.read_excel(file)
         else:
             st.error(f"unsupported file type: {file_ext}")
@@ -66,7 +66,7 @@ if uploaded_files:
 
         #conversion options
         st.subheader("🔄 Conversion Options")
-        conversion_type = st.radio(f"converter{file.name} to:", ["CVS" "Excel"], key = file.name)
+        conversion_type = st.radio(f"converter{file.name} to:", ["CVS", "Excel"], key = file.name)
         if st.button(f"convert{file.name}"):
             buffer = BytesIO()
             if conversion_type == "CSV":
@@ -75,7 +75,7 @@ if uploaded_files:
                 mime_type = "text/csv"
 
             elif conversion_type == "Excel":
-                df.to.to_excel(buffer, index=False)
+                df.to_excel(buffer, index=False)
                 file_name = file.name.replace(file_ext, ".xlsx")
                 mime_type = "application/vnd.openxmlformats.officedocument.spread.sheetml.sheet"
             buffer.seek(0)
